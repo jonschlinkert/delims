@@ -132,10 +132,14 @@ Default: `undefined`
 ![image](https://f.cloud.github.com/assets/383994/2003333/7eeee55e-8647-11e3-848c-9290ebeb70a6.png)
 
 
+***
+
 ### Lo-Dash Templates
 
 ![image](https://f.cloud.github.com/assets/383994/2003335/8ab362a2-8647-11e3-820f-0a1f110532f0.png)
 
+
+***
 
 
 ## Author
