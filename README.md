@@ -1,6 +1,7 @@
 # delims [![NPM version](https://badge.fury.io/js/delims.png)](http://badge.fury.io/js/delims)
 
-> Generate RegExp for delimiters.
+> Generate RegExp for delimiters, to be used with templates, files or data streams.
+
 
 ## Getting Started
 To install the module with [npm](npmjs.org), run the following in the command line:
@@ -47,7 +48,10 @@ will result in something like this:
 (?:---|~~~)/*other regex*/(?:---|~~~)
 ```
 
-### Options
+_(Warning! Passing in multiple delimiters is a good way to cause delimiter collision, you best avoid doing so accept for running tests. Don't say I didn't warn you!)_
+
+
+## Options
 
 An object of options may be passed as a second parameter.  Example:
 
@@ -55,8 +59,29 @@ An object of options may be passed as a second parameter.  Example:
 delims(['---', '---'], options);
 ```
 
-Here are the available options and their defaults:
+Here are the available options and their defaults, starting with **boundary** options:
 
+
+### Boundary options
+In addition to the delimiters themselves, these additional boundary options are available for increased flexibility.
+
+#### matter
+Type: `Boolean`
+
+Default: `([\s\S]+?)`
+
+This is the "content" between the delimiters. YAML Front Matter being the inspiration for `matter`. See [the examples](#examples).
+
+
+#### body
+Type: `Boolean`
+
+Default: `([\s\S]+|\s?)`
+
+The "content" after the delims
+
+
+## RegExp Options
 #### beginning
 Type: `Boolean`
 
@@ -64,21 +89,7 @@ Default: `^`
 
 `^` Matches beginning of input. See the [Mozilla RegEx documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp).
 
-#### matter
-Type: `Boolean`
-
-Default: `([\\s\\S]+?)`
-
-The "content" between the delims.
-
-#### body
-Type: `Boolean`
-
-Default: `([\\s\\S]+|\\s?)`
-
-The "content" after the delims
-
-#### end
+### end
 Type: `Boolean`
 
 Default: `$`
@@ -90,14 +101,14 @@ Type: `Boolean`
 
 Default: `false`
 
-Escape custom regex used for delimiters.
+Escape custom regex used for delimiters. E.g. `['{%', '%}']` will be escaped to `['\\{\\%', '\\%\\}']` before being passed to `new RegExp()`.
 
 #### noncapture
 Type: `Boolean`
 
 Default: `false`
 
-Build a non-capture group. Disabled by default, but enabled for multiple delimiters.
+Build a non-capture group. Disabled by default, but enabled by default when multiple delimiters are passed in.
 
 #### flags
 Type: `Boolean`
@@ -107,6 +118,25 @@ Default: `undefined`
 * `g`: global match
 * `i`: ignore case
 * `m`: multiline, so that beginning and end characters, `^` and `$`, work over multiple lines. See the [Mozilla RegEx documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp).
+
+
+## Examples
+
+> A delimiter is a sequence of one or more characters used to specify the boundary between separate, independent regions in plain text or other data streams.
+> --[Wikipedia](http://en.wikipedia.org/wiki/Delimiter)
+
+
+### YAML Front Matter
+
+
+![image](https://f.cloud.github.com/assets/383994/2003333/7eeee55e-8647-11e3-848c-9290ebeb70a6.png)
+
+
+### Lo-Dash Templates
+
+![image](https://f.cloud.github.com/assets/383994/2003335/8ab362a2-8647-11e3-820f-0a1f110532f0.png)
+
+
 
 ## Author
 

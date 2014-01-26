@@ -1,6 +1,6 @@
 {
   "name": "delims",
-  "description": "Annihilate YAML front matter.",
+  "description": "Generate RegExp for delimiters, to be used with templates, files or data streams.",
   "version": "0.1.0",
   "homepage": "https://github.com/jonschlinkert/delims",
   "author": {
@@ -24,13 +24,6 @@
   "engines": {
     "node": ">= 0.8.0"
   },
-  "keywords": [
-    "yfm",
-    "yaml front matter",
-    "front matter",
-    "remove",
-    "strip"
-  ],
   "devDependencies": {
     "globule": "~0.2.0",
     "fs-utils": "~0.1.11",
@@ -41,5 +34,18 @@
     "yfm": "~0.1.0",
     "lodash": "~2.4.1",
     "fs-utils": "~0.1.11"
-  }
+  },
+  "keywords": [
+    "yfm",
+    "yaml front matter",
+    "front matter",
+    "templates",
+    "regex",
+    "regexp",
+    "regular expressions",
+    "custom delimiters",
+    "delims",
+    "delimiters",
+    "boundaries"
+  ]
 }

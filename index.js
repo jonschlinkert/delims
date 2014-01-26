@@ -58,14 +58,14 @@ module.exports = function (delims, options) {
   opts.body = delims[2] || opts.body || '';
 
   // Generate regex ections
-  opts.open = buildRegexGroup(delims[0], opts);
-  opts.close = buildRegexGroup(delims[1], opts);
-  var block = opts.matter+opts.close+opts.body+opts.end;
+  var open = buildRegexGroup(delims[0], opts);
+  var close = buildRegexGroup(delims[1], opts);
+  var block = opts.matter + close + opts.body + opts.end;
 
   // "evaluate" is probably most suitable for most use cases
   return {
-    evaluate: new RegExp(opts.beginning+opts.open+block, opts.flags),
-    interpolate: new RegExp(opts.beginning+opts.open+'='+block, opts.flags),
-    escape: new RegExp(opts.beginning+opts.open+'-'+block, opts.flags),
+    evaluate: new RegExp(opts.beginning + open + block, opts.flags),
+    interpolate: new RegExp(opts.beginning + open + '=' + block, opts.flags),
+    escape: new RegExp(opts.beginning + open + '-' + block, opts.flags),
   };
 };
