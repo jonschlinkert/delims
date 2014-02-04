@@ -31,7 +31,6 @@
     "mocha": "~1.17.1"
   },
   "dependencies": {
-    "yfm": "~0.1.0",
     "lodash": "~2.4.1",
     "fs-utils": "~0.1.11"
   },
