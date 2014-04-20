@@ -1,16 +1,12 @@
-/*
- * delims
- * https://github.com/jonschlinkert/delims
+/*!
+ * delims <https://github.com/jonschlinkert/delims>
  *
  * Copyright (c) 2014 Jon Schlinkert
  * Licensed under the MIT license.
  */
 
-'use strict';
-
-
-var _ = require('lodash');
-var utils = require('./lib/utils');
+const _ = require('lodash');
+const utils = require('./lib/utils');
 
 
 // Generate RegExp patterns dynamically. By default, patterns use
@@ -19,17 +15,17 @@ var delims = module.exports = function (delims, options) {
   if(!_.isArray(delims)) {options = delims; delims = ['---', '---'];}
 
   // Defaults
-  var opts = _.extend({
+  var opts = _.defaults({}, options, {
     beginning: '^',           // '^' Matches beginning of input.
     matter: '([\\s\\S]+?)',   // The "content" between the delims
     body: '([\\s\\S]+|\\s?)', // The "content" after the delims
     end: '$',                 // '$' Matches end of input.
     flags: ''                 // g, m, i
-  }, options);
+  });
   opts.body = delims[2] || opts.body || '';
 
   // Generate regex ections
-  var open = utils.buildRegexGroup(delims[0], opts);
+  var open  = utils.buildRegexGroup(delims[0], opts);
   var close = utils.buildRegexGroup(delims[1], opts);
   var block = opts.matter + close + opts.body + opts.end;
 

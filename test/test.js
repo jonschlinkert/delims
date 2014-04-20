@@ -1,21 +1,14 @@
-/*
- * delims
- * https://github.com/jonschlinkert/delims
+/*!
+ * delims <https://github.com/jonschlinkert/delims>
  *
- * Copyright (c) 2014 Jon Schlinkert
+ * Copyright (c) 2014 Jon Schlinkert, contributors
  * Licensed under the MIT license.
  */
 
-'use strict';
+const util = require('util');
+const expect = require('chai').expect;
+const delims = require('../');
 
-// Node.js
-var util = require('util');
-
-// node_modules
-var expect = require('chai').expect;
-
-// Local libs
-var delims = require('../');
 
 describe('create delims:', function () {
 
