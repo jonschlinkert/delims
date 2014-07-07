@@ -5,23 +5,26 @@
  * Licensed under the MIT license.
  */
 
-const _ = require('lodash');
-const utils = require('./lib/utils');
+'use strict';
+
+var utils = require('./lib/utils');
+var arrayify = require('arrayify-compact');
+var extend = require('xtend');
 
 
 // Generate RegExp patterns dynamically. By default, patterns use
 // [\s\S] instead to avoid the need for multiline and dotall flags.
 var delims = module.exports = function (delims, options) {
-  if(!_.isArray(delims)) {options = delims; delims = ['---', '---'];}
+  if(!Array.isArray(delims)) {options = delims; delims = ['---', '---'];}
 
   // Defaults
-  var opts = _.defaults({}, options, {
+  var opts = extend({}, {
     beginning: '^',           // '^' Matches beginning of input.
     matter: '([\\s\\S]+?)',   // The "content" between the delims
     body: '([\\s\\S]+|\\s?)', // The "content" after the delims
     end: '$',                 // '$' Matches end of input.
     flags: ''                 // g, m, i
-  });
+  }, options);
   opts.body = delims[2] || opts.body || '';
 
   // Generate regex ections
@@ -37,6 +40,6 @@ var delims = module.exports = function (delims, options) {
   };
 };
 
-delims.arrayify = utils.arrayify;
+delims.arrayify = arrayify;
 delims.escapeDelim = utils.escapeDelim;
 delims.buildRegexGroup = utils.buildRegexGroup;

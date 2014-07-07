@@ -1,7 +1,7 @@
 {
   "name": "delims",
   "description": "Generate RegExp for delimiters, to be used with templates, files or data streams.",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "homepage": "https://github.com/jonschlinkert/delims",
   "author": {
     "name": "Jon Schlinkert",
@@ -29,7 +29,8 @@
     "mocha": "~1.18.2"
   },
   "dependencies": {
-    "lodash": "~2.4.1"
+    "arrayify-compact": "^0.1.0",
+    "xtend": "^3.0.0"
   },
   "keywords": [
     "yfm",
