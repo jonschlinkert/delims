@@ -3,6 +3,11 @@
 > Generate RegExp for delimiters, to be used with templates, files or data streams.
 
 
+### BREAKING API CHANGES!
+
+**Heads up!** please [read the API documentation](#API) to see the changes made in v0.3.0.
+
+
 ## Getting Started
 To install the module with [npm](npmjs.org), run the following in the command line:
 
@@ -19,14 +24,86 @@ bower install delims --save
 Use within your application with the following line of JavaScript:
 
 ```js
-var delims = require('delims');
-
-delims([delimiters], {options});
+var Delims = require('delims');
+var delims = new Delims();
 ```
 
-## Parameters
+# API
 
-#### delimiter
+## .create
+
+```js
+delims.create(array, options);
+```
+
+* `array`:
+
+
+
+Build custom delimiter regex with the given `options`.
+
+**Example:**
+
+By default, if no options are defined `delims.create()` generates regex for front-matter:
+
+```js
+var matter = delims.create().evaluate;
+//=> '/^---([\\s\\S]+?)---([\\s\\S]+|\\s?)$/'
+```
+
+**Customize:**
+
+To customize, pass the delimiters you want to use in the form of an array. Here a couple examples:
+
+```js
+var matter = delims.create(['~~~', '~~~']).evaluate;
+//=> '/^~~~([\\s\\S]+?)~~~([\\s\\S]+|\\s?)$/';
+
+var matter = delims.create(['~{3}', '~{3}']).evaluate;
+//=> '/^~{3}([\\s\\S]+?)~{3}([\\s\\S]+|\\s?)$/';
+```
+
+Read [more about delimiters](#delimiters).
+
+
+## .templates
+
+Convenience method for generating delimiter regex for templates with the necessary options pre-defined.
+
+**Example:**
+
+Let's say you want to use curly braces as delimiters for Lo-Dash templates instead of angle brackes, e.g. `{%= name %}`.
+
+```js
+var settings = delims.templates(['{{', '}}']);
+
+// use it like this
+var tmpl = _.template('{%= name %}', {name: 'Jon'}, settings);
+console.log(tmpl);
+//=> Jon
+```
+
+The full object returned looks something like:
+
+```js
+{
+  beginning: '',
+  matter: '([\\s\\S]+?)',
+  body: '',
+  end: '',
+  flags: 'g',
+  noncapture: false,
+  delims: [ '{%', '%}' ],
+  open: '{%',
+  close: '%}',
+  evaluate: /{%([\s\S]+?)%}/g,
+  interpolate: /{%=([\s\S]+?)%}/g,
+  escape: /{%-([\s\S]+?)%}/g
+}
+```
+
+
+## delimiters
 Type: `Array`
 
 Default: `['---', '---']`
@@ -51,7 +128,7 @@ will result in something like this:
 _(Warning! Passing in multiple delimiters is a good way to cause delimiter collision, you best avoid doing so accept for running tests. Don't say I didn't warn you!)_
 
 
-## Options
+## options
 
 An object of options may be passed as a second parameter.  Example:
 
@@ -81,7 +158,7 @@ Default: `([\s\S]+|\s?)`
 The "content" after the delims
 
 
-## RegExp Options
+### RegExp Options
 #### beginning
 Type: `Boolean`
 
@@ -89,28 +166,28 @@ Default: `^`
 
 `^` Matches beginning of input. See the [Mozilla RegEx documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp).
 
-### end
+#### end
 Type: `Boolean`
 
 Default: `$`
 
 `$` Matches end of input. See the [Mozilla RegEx documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp).
 
-#### escape
+### escape
 Type: `Boolean`
 
 Default: `false`
 
 Escape custom regex used for delimiters. E.g. `['{%', '%}']` will be escaped to `['\\{\\%', '\\%\\}']` before being passed to `new RegExp()`.
 
-#### noncapture
+### noncapture
 Type: `Boolean`
 
 Default: `false`
 
 Build a non-capture group. Disabled by default, but enabled by default when multiple delimiters are passed in.
 
-#### flags
+### flags
 Type: `Boolean`
 
 Default: `undefined`
