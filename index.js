@@ -7,8 +7,9 @@
 
 'use strict';
 
+var pick = require('object-pick');
+var merge = require('mixin-deep');
 var utils = require('./lib/utils');
-var extend = require('xtend');
 
 
 /**
@@ -22,7 +23,7 @@ var Delimiters = function Delimiters (delims, options) {
   this.options = options || {};
   this.delims = delims || [];
 
-  this.defaults = extend({}, {
+  this.defaults = merge({}, {
     beginning: '^',           // '^' Matches beginning of input.
     matter: '([\\s\\S]+?)',   // The "content" between the delims
     body: '([\\s\\S]+|\\s?)', // The "content" after the delims
@@ -33,8 +34,6 @@ var Delimiters = function Delimiters (delims, options) {
 
 
 /**
- * ## .create
- *
  * Build custom delimiter regex.
  *
  * @param  {Array} `delims`
@@ -49,7 +48,7 @@ Delimiters.prototype.create = function(delims, options) {
   }
 
   // Defaults
-  var opts = extend({}, this.defaults, options);
+  var opts = merge({}, this.defaults, options);
   opts.body = delims[2] || opts.body || '';
 
   // Generate regex ections
@@ -58,7 +57,7 @@ Delimiters.prototype.create = function(delims, options) {
   var block = opts.matter + close + opts.body + opts.end;
 
   // "evaluate" is probably most suitable for most use cases
-  return extend(opts, {open: open, close: close, delims: delims}, {
+  return merge(opts, {open: open, close: close, delims: delims}, {
     evaluate: new RegExp(opts.beginning + open + block, opts.flags),
     interpolate: new RegExp(opts.beginning + open + '=' + block, opts.flags),
     escape: new RegExp(opts.beginning + open + '-' + block, opts.flags),
@@ -67,8 +66,6 @@ Delimiters.prototype.create = function(delims, options) {
 
 
 /**
- * ## .matter
- *
  * Convenience method for generating delimiter regex for front matter,
  * with the necessary options pre-defined.
  *
@@ -78,13 +75,11 @@ Delimiters.prototype.create = function(delims, options) {
  */
 
 Delimiters.prototype.matter = function (delims, opts) {
-  return this.create(delims, opts);
+  return pick(this.create(delims, opts), ['evaluate']).evaluate;
 };
 
 
 /**
- * ## .templates
- *
  * Convenience method for generating delimiter regex for templates,
  * with the necessary options pre-defined.
  *
@@ -94,13 +89,9 @@ Delimiters.prototype.matter = function (delims, opts) {
  */
 
 Delimiters.prototype.templates = function (delims, opts) {
-  return this.create(delims, extend({
-    body: '',
-    beginning: '',
-    end: '',
-    flags: 'g',
-    noncapture: false
-  }, opts));
+  var defaults = {body: '', beginning: '', end: '', flags: 'g', noncapture: false};
+  var delimiters = this.create(delims, merge(defaults, opts));
+  return pick(delimiters, ['interpolate', 'evaluate', 'escape']);
 };
 
 module.exports = Delimiters;
