@@ -1,7 +1,7 @@
 {
   "name": "delims",
   "description": "Generate RegExp for delimiters, to be used with templates, files or data streams.",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "homepage": "https://github.com/jonschlinkert/delims",
   "author": {
     "name": "Jon Schlinkert",
