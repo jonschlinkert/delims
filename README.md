@@ -9,7 +9,6 @@
 **Heads up!** please [read the API documentation](#API) to see the changes made in v0.3.0.
 
 
-## Install
 #### Install with [npm](npmjs.org)
 
 ```bash
