@@ -19,7 +19,8 @@
     "url": "https://github.com/jonschlinkert/delims/blob/master/LICENSE"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "lib/"
   ],
   "main": "index.js",
   "engines": {
